@@ -42,7 +42,7 @@ bool bloqueSirve(const int len, const bloque_t &bloque) {
 	offset = lugarDisponible(bloque);
 
 	if (offset == NULL) {
-	} else if ((offset - bloque.datos + sizeof(int) + len) <= (sizeof(bloque_t) * .90)) {
+	} else if ((offset - bloque.datos + sizeof(int) + len) <= (sizeof(bloque_t) * .98)) {
 		resultado = true;
 	}
 
@@ -83,6 +83,8 @@ string cargarArchivo(string file) {
 
 	ifstream ifs;
 	string datos;
+
+	ifs.open(file.c_str(), ios::in | ios::binary);
 
 	if (ifs.is_open()) {
 
@@ -197,17 +199,17 @@ void Espacio::execute(int argc, char *argv[]) {
 		//registro variable de un bloque del archivo con ruta [NOMBRE_ARCHIVO].
 		//Si no está creado devuelve error.
 
-		string file;
+		string org;
 		string datos;
 		bloque_t bloque;
 		int numBloque;
 		int len;
 
-		file = argv[3];
-		len = tamanoArchivo(file);
+		org = argv[3];
+		len = tamanoArchivo(org);
 
 		obtenerBloque(file, len, numBloque, bloque);
-		datos = cargarArchivo(file);
+		datos = cargarArchivo(org);
 		agregarRegistro(datos, numBloque, bloque);
 		escribirBloque(file, numBloque, bloque);
 
